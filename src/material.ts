@@ -50,10 +50,15 @@ class MaterialHandler {
       .map(async (name) => {
         let material = this.materials[name];
         await material.loadMaterial();
+        // await this.sleep(Math.random() * 10 * 1000);
         this.process.next(this.process.getValue() + 1);
         return
       });
     return Promise.all(tasks);
+  }
+
+  public async sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(() => resolve(), ms));
   }
 }
 
