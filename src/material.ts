@@ -1,10 +1,13 @@
+import { BehaviorSubject } from "rxjs";
 export type MaterialTypes = "image" | "audio" | "video";
-export class MaterialHandler {
+class MaterialHandler {
   public addMaterials(items: { name: string, src: string, type: MaterialTypes }[]) {
     items.forEach(item => {
       this.addMaterial(item.name, item.type, item.src)
     });
   }
+  public total = 0;
+  public process = new BehaviorSubject<number>(0);
 
   public addMaterial(
     name: string,
@@ -30,6 +33,7 @@ export class MaterialHandler {
       default:
         return false;
     }
+    this.total++;
 
     this.materials[name] = material;
   }
@@ -45,7 +49,9 @@ export class MaterialHandler {
       .keys(this.materials)
       .map(async (name) => {
         let material = this.materials[name];
-        return material.loadMaterial()
+        await material.loadMaterial();
+        this.process.next(this.process.getValue() + 1);
+        return
       });
     return Promise.all(tasks);
   }
