@@ -21,9 +21,7 @@ import { materialHandler as mh, ImageMaterial } from "./material";
     val = p;
   });
   let fps = 60;
-  // let image = mh.materials["test"] as ImageMaterial;
   setInterval(() => {
-    // canvas.clear();
     canvas.fullRect("#FFF");
     canvas.ctx.fillStyle = "#333";
     let w = canvas.width * .8 / mh.total * val;
@@ -31,10 +29,12 @@ import { materialHandler as mh, ImageMaterial } from "./material";
     canvas.ctx.font = "36pt Calibri";
     canvas.ctx.fillStyle = "#F00";
     let offset = canvas.ctx.measureText(`${val / mh.total}%`);
-    canvas.ctx.fillText(`${val / mh.total}%`, (canvas.width - offset.width) / 2, canvas.height / 2);
-    // console.log();
+    canvas.ctx.fillText(`${Math.round(val * 100 / mh.total)}%`, (canvas.width - offset.width) / 2, canvas.height / 2);
   }, 1000 / fps);
   await mh.load();
-  // let people = new TestPeople();
+
   return;
 })();
+
+
+// let people = new TestPeople();

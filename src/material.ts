@@ -1,6 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 export type MaterialTypes = "image" | "audio" | "video";
-class MaterialHandler {
+export class MaterialHandler {
   public addMaterials(items: { name: string, src: string, type: MaterialTypes }[]) {
     items.forEach(item => {
       this.addMaterial(item.name, item.type, item.src)
