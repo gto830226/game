@@ -9,10 +9,20 @@ export class Canvas {
     this.dom.width = this.width;
     this.dom.height = this.height;
   }
+  public get centerX() {
+    return this.width / 2;
+  }
+  public get centerY() {
+    return this.height / 2;
+  }
   private createCanvasContent() {
     this.ctx = this.dom.getContext("2d");
   }
   public clear() {
     this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+  public fullRect(color = "#FFFFFF") {
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(0, 0, this.width, this.height)
   }
 }
