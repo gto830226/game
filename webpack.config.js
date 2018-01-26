@@ -4,7 +4,7 @@ let webpack = require('webpack');
 let UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 let WebpackCdnPlugin = require('webpack-cdn-plugin');
 module.exports = {
-  devtool: "source-map",
+  devtool: 'source-map',
   entry: {
     index: './src/index.ts',
   },
@@ -19,7 +19,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /.ts$/,
-      loader: 'awesome-typescript-loader'
+      loader: 'ts-loader'
     }, {
       test: /\.(s*)css$/,
       use: ["style-loader", "css-loader", "sass-loader"]

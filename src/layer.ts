@@ -8,8 +8,7 @@ export class LayerHandler {
     layer.handler = this;
     this.layers.push(layer);
   }
-  public constructor() { }
-  public layers: Layer[] = [];
+  public constructor(public layers: Layer[] = []) { }
   public moveLayer(layer: Layer, offset: number) {
     let ori = this.layers.indexOf(layer);
     let tar = clamp(ori + offset, 0, this.layers.length - 1);
@@ -31,7 +30,7 @@ export class LayerHandler {
     if (!name) return;
     return this.layers.find(layer => layer.name == name);
   }
-  public draw(canvas: Canvas, camera: Camera) {
+  public draw(camera: Camera) {
     let timerId: number;
     camera.fps.distinctUntilChanged().subscribe((fps) => {
       if (timerId != null) {
@@ -39,10 +38,9 @@ export class LayerHandler {
         timerId = null;
       };
       if (fps <= 0) return;
-      console.log("FPS:", fps);
       timerId = setInterval(() => {
         for (let layer of this.layers) {
-          layer.draw(canvas, camera);
+          layer.draw(camera);
         }
       }, 1000 / fps)
     });
@@ -50,10 +48,10 @@ export class LayerHandler {
 }
 
 export class Layer {
-  public constructor(public name: string) { }
+  public constructor(public name: string, public sprites: Sprite[] = []) { }
   public handler: LayerHandler;
   public disabled = false;
-  public sprites: Sprite[] = [];
+
   public rise() {
     if (!this.handler) return;
     this.handler.moveLayer(this, 1);
@@ -62,11 +60,17 @@ export class Layer {
     if (!this.handler) return;
     this.handler.moveLayer(this, -1);
   }
-  public draw(canvas: Canvas, camera: Camera) {
+  public draw(camera: Camera) {
     if (this.disabled) return;
     for (let sprite of this.sprites) {
-      sprite.draw(canvas, camera);
+      sprite.draw(camera);
     }
+  }
+  public addSprite(sprite: Sprite) {
+    this.sprites.push(sprite);
+  }
+  public removeSprite(sprite: Sprite) {
+    this.sprites = this.sprites.filter(spr => sprite === spr);
   }
 }
 

@@ -15,26 +15,22 @@ export class MaterialHandler {
     src: string
   ) {
     if (!name) return false;
+    if (this.materials[name]) throw `Error: material name "${name}" 重複`;
     let material: Material;
-
     switch (type) {
       case "image":
         material = new ImageMaterial(src);
         break;
-
       case "audio":
         material = new AudioMaterial(src);
         break;
-
       case "video":
         material = new VideoMaterial(src);
         break;
-
       default:
-        return false;
+        throw `Error: material type "${type}"`;
     }
     this.total++;
-
     this.materials[name] = material;
   }
 
@@ -49,8 +45,10 @@ export class MaterialHandler {
       .keys(this.materials)
       .map(async (name) => {
         let material = this.materials[name];
-        await material.loadMaterial();
-        await this.sleep(Math.random() * 10 * 1000);
+        await material.loadMaterial().catch(e => {
+          console.log("圖片載入:", e);
+        });
+        // await this.sleep(Math.random() * 5 * 1000);
         this.process.next(this.process.getValue() + 1);
         return
       });
@@ -80,16 +78,13 @@ export class ImageMaterial extends Material {
       this.data.onload = () => {
         resolve(this.data);
       }
-      this.data.onerror = () => {
-        reject(null);
+      this.data.onerror = (err) => {
+        reject(err);
       }
     })
     this.data.src = this.src;
     return task;
   }
-  // public splitCount(width: number, height: number) {
-  //   return ~~(this.width / width) * ~~(this.height / height);
-  // }
   public splitWidth(count: number) {
     return this.width / count;
   }
@@ -114,8 +109,8 @@ export class AudioMaterial extends Material {
       this.data.onload = () => {
         resolve(this.data);
       }
-      this.data.onerror = () => {
-        reject(null);
+      this.data.onerror = (err) => {
+        reject(err);
       }
     })
     this.data.src = this.src;
@@ -133,8 +128,8 @@ export class VideoMaterial extends Material {
       this.data.onload = () => {
         resolve(this.data);
       }
-      this.data.onerror = () => {
-        reject(null);
+      this.data.onerror = (err) => {
+        reject(err);
       }
     })
     this.data.src = this.src;
