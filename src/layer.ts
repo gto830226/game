@@ -32,18 +32,9 @@ export class LayerHandler {
   }
   public draw(camera: Camera) {
     let timerId: number;
-    camera.fps.distinctUntilChanged().subscribe((fps) => {
-      if (timerId != null) {
-        clearInterval(timerId);
-        timerId = null;
-      };
-      if (fps <= 0) return;
-      timerId = setInterval(() => {
-        for (let layer of this.layers) {
-          layer.draw(camera);
-        }
-      }, 1000 / fps)
-    });
+    for (let layer of this.layers) {
+      layer.draw(camera);
+    }
   }
 }
 
