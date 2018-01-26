@@ -48,11 +48,12 @@ export class MaterialHandler {
         await material.loadMaterial().catch(e => {
           console.log("圖片載入:", e);
         });
-        // await this.sleep(Math.random() * 5 * 1000);
         this.process.next(this.process.getValue() + 1);
         return
       });
-    return Promise.all(tasks);
+    await Promise.all(tasks);
+    await this.sleep(1000);
+    return;
   }
 
   public async sleep(ms: number) {

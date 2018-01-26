@@ -7,19 +7,21 @@ export interface IFrameScript {
 export class Animation {
   private timerId: number;
   private frameIndex = 0;
-
+  private defaultRepeatCount: number;
   public constructor(public frames: IFrameScript[], public repeatCount = 1) {
+    this.defaultRepeatCount = repeatCount;
     this.frames = this.frames
       .filter(s => typeof s.script == "function")
       .map(s => {
-        if (!s.stay) s.stay = 333;
+        if (!s.stay) s.stay = 200;
         return s;
       });
   }
 
-  public start(repeatCount = 1) {
+  public start(repeatCount?: number) {
     if (this.frames.length == 0) return;
     if (this.timerId) this.clearTimer();
+    if (typeof repeatCount == "number") this.repeatCount = repeatCount;
     this.nextFrame()
   }
 
@@ -30,7 +32,7 @@ export class Animation {
   public end() {
     this.clearTimer();
     this.frameIndex = 0;
-    this.repeatCount = -1;
+    this.repeatCount = this.defaultRepeatCount;
   }
 
   private clearTimer() {
@@ -42,7 +44,7 @@ export class Animation {
 
   private nextFrame() {
     if (this.repeatCount > 0) {
-      if (this.frameIndex + 1 >= this.frames.length) this.repeatCount--;
+      if (this.frameIndex + 1 > this.frames.length) this.repeatCount--;
       if (this.repeatCount == 0) {
         this.end();
         return;

@@ -16,7 +16,9 @@ export class Sprite {
   public set animationIndex(index: string) {
     if (!this.animations[index]) return;
     if (index == this._animationIndex) return;
-    this.stopAnimation();
+
+    this.endAnimation();
+    console.log(index);
     this._animationIndex = index;
     this.startAnimation();
   }
@@ -26,7 +28,7 @@ export class Sprite {
     this.initAnimations()
     this.initAnimationName();
   }
-  private initAnimationName() {
+  protected initAnimationName() {
     let name = Object.keys(this.animations)[0];
     if (name) this.animationIndex = name;
   }

@@ -5,6 +5,8 @@ import { Loading } from "./loading";
 import { LayerHandler, Layer } from "./layer";
 import { Camera } from "./camera";
 import { TestPeople } from "./test";
+import { Background } from "./background";
+import { TestPeople2 } from "./test2";
 
 
 
@@ -12,6 +14,7 @@ import { TestPeople } from "./test";
 
 let loadMaterial = () => {
   mh.addMaterial("test", "image", "http://localhost:9527/assets/aigei3_com.png")
+  mh.addMaterial("test2", "image", "http://localhost:9527/assets/aigei2_com.png")
   mh.addMaterial("a", "image", "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   mh.addMaterial("b", "image", "https://images.pexels.com/photos/220856/pexels-photo-220856.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   mh.addMaterial("c", "image", "https://images.pexels.com/photos/170304/pexels-photo-170304.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
@@ -37,8 +40,14 @@ let loadMaterial = () => {
   let processSubscription = mh.process.subscribe(p => loading.progress = p);
   await mh.load();
   processSubscription.unsubscribe();
+  // console.log(layer.sprites.length);
   layer.removeSprite(loading);
+  // console.log(layer.sprites.length);
   let test = new TestPeople();
+  let test2 = new TestPeople2();
+  let back = new Background();
+  layer.addSprite(back);
   layer.addSprite(test);
+  layer.addSprite(test2);
 })();
 
