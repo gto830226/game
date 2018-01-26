@@ -16,9 +16,7 @@ export class Sprite {
   public set animationIndex(index: string) {
     if (!this.animations[index]) return;
     if (index == this._animationIndex) return;
-
     this.endAnimation();
-    console.log(index);
     this._animationIndex = index;
     this.startAnimation();
   }

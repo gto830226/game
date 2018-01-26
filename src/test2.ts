@@ -60,28 +60,28 @@ export class TestPeople2 extends Sprite {
         let y = this.point.y - tarH / 2;
         canvas.ctx.drawImage(material.data, 0, this.materialDirectionOffset, matW, matH, x, y, tarW, tarH);
       },
-      stay: 100
+      stay: 300
     }, {
       script: (camera: Camera, canvas: Canvas) => {
         let x = this.point.x - tarW / 2;
         let y = this.point.y - tarH / 2;
         canvas.ctx.drawImage(material.data, matW, this.materialDirectionOffset, matW, matH, x, y, tarW, tarH);
       },
-      stay: 100
+      stay: 300
     }, {
       script: (camera: Camera, canvas: Canvas) => {
         let x = this.point.x - tarW / 2;
         let y = this.point.y - tarH / 2;
         canvas.ctx.drawImage(material.data, matW * 2, this.materialDirectionOffset, matW, matH, x, y, tarW, tarH);
       },
-      stay: 100
+      stay: 300
     }, {
       script: (camera: Camera, canvas: Canvas) => {
         let x = this.point.x - tarW / 2;
         let y = this.point.y - tarH / 2;
         canvas.ctx.drawImage(material.data, matW * 3, this.materialDirectionOffset, matW, matH, x, y, tarW, tarH);
       },
-      stay: 100
+      stay: 300
     }], -1);
 
     this.animations['rotate'] = new Animation([{
@@ -108,11 +108,7 @@ export class TestPeople2 extends Sprite {
         let y = this.point.y - tarH / 2;
         canvas.ctx.drawImage(material.data, 0, matH * 2, matW, matH, x, y, tarW, tarH);
       }
-    }, {
-      script: (camera: Camera, canvas: Canvas) => {
-        this.initAnimationName();
-      }
-    }], 1);
+    }], 3);
   }
 }
 

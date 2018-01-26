@@ -24,7 +24,7 @@ export class Loading extends Sprite {
         let offset = canvas.ctx.measureText(text);
         canvas.ctx.fillText(text, (canvas.width - offset.width) / 2, canvas.height / 2 - 20);
       }
-    }]);
+    }], 1);
   }
 
 }

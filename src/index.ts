@@ -40,9 +40,7 @@ let loadMaterial = () => {
   let processSubscription = mh.process.subscribe(p => loading.progress = p);
   await mh.load();
   processSubscription.unsubscribe();
-  // console.log(layer.sprites.length);
   layer.removeSprite(loading);
-  // console.log(layer.sprites.length);
   let test = new TestPeople();
   let test2 = new TestPeople2();
   let back = new Background();

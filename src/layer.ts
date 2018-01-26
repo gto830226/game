@@ -61,6 +61,7 @@ export class Layer {
     this.sprites.push(sprite);
   }
   public removeSprite(sprite: Sprite) {
+    sprite.endAnimation();
     this.sprites = this.sprites.filter(spr => sprite != spr);
   }
 }

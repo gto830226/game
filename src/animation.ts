@@ -20,8 +20,9 @@ export class Animation {
 
   public start(repeatCount?: number) {
     if (this.frames.length == 0) return;
-    if (this.timerId) this.clearTimer();
+    if (this.timerId) this.end();
     if (typeof repeatCount == "number") this.repeatCount = repeatCount;
+    // console.log('start', this.name);
     this.nextFrame()
   }
 
@@ -33,30 +34,33 @@ export class Animation {
     this.clearTimer();
     this.frameIndex = 0;
     this.repeatCount = this.defaultRepeatCount;
+    // console.log('end', this.name)
   }
 
   private clearTimer() {
     if (this.timerId != null) {
+
       clearTimeout(this.timerId)
       this.timerId = null;
     }
   }
-
   private nextFrame() {
-    if (this.repeatCount > 0) {
-      if (this.frameIndex + 1 > this.frames.length) this.repeatCount--;
-      if (this.repeatCount == 0) {
-        this.end();
-        return;
-      }
+    // console.log('this.repeatCount:', this.name, this.repeatCount)
+    if (this.repeatCount != 0) {
+      let frame = this.frames[this.frameIndex];
+      this.clearTimer();
+      this.timerId = setTimeout(() => {
+        this.frameIndex = (this.frameIndex + 1) % this.frames.length;
+        this.nextFrame();
+        if (this.repeatCount >= 0) {
+          if (this.frameIndex + 1 >= this.frames.length) this.repeatCount--;
+        }
+      }, frame.stay);
+    } else {
+      this.end();
+      return;
     }
-    let frame = this.frames[this.frameIndex];
-    this.timerId = setTimeout(() => {
-      this.frameIndex = (this.frameIndex + 1) % this.frames.length;
-      this.nextFrame();
-    }, frame.stay)
   }
-
   public draw(camera: Camera) {
     let frame = this.frames[this.frameIndex];
     if (!frame) return (camera: Camera, canvas: Canvas) => { };
