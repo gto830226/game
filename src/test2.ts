@@ -1,11 +1,12 @@
-import { Sprite } from "./sprite";
-import { Animation } from "./animation";
-import { Camera } from "./camera";
-import { Canvas } from "./canvas";
-import { materials, ImageMaterial } from "./material";
-import { controller } from "./controller";
+import { Sprite } from "./core/sprite";
+import { Animation } from "./core/animation";
+import { Camera } from "./core/camera";
+import { Canvas } from "./core/canvas";
+import { materials, ImageMaterial } from "./core/material";
+import { controller } from "./core/controller";
 export class TestPeople2 extends Sprite {
   public direction = 2;
+  public speed = 1;
   public constructor() {
     super();
     this.point.x = 300;
@@ -15,28 +16,40 @@ export class TestPeople2 extends Sprite {
         case 's':
           this.animationIndex = "walk";
           this.direction = 2;
-          this.point.y += 5;
           break;
         case 'w':
           this.animationIndex = "walk";
           this.direction = 8;
-          this.point.y -= 5;
           break;
         case 'd':
           this.animationIndex = "walk";
           this.direction = 6;
-          this.point.x += 5;
           break;
         case 'a':
           this.animationIndex = "walk";
           this.direction = 4;
-          this.point.x -= 5;
           break;
         case 'z':
           this.animationIndex = "rotate";
           break;
       }
     })
+  }
+  private move() {
+    switch (this.direction) {
+      case 2:
+        this.point.y += 5;
+        break;
+      case 4:
+        this.point.x -= 5;
+        break;
+      case 6:
+        this.point.x += 5;
+        break;
+      case 8:
+        this.point.y -= 5;
+        break;
+    }
   }
   private get materialDirectionOffset() {
     switch (this.direction) {

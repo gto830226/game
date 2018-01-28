@@ -26,7 +26,7 @@ module.exports = {
     }]
   },
   plugins: [
-    new UglifyJsPlugin(),
+    // new UglifyJsPlugin(),
     new HtmlWebpackPlugin({
       template: '!!pug-loader!./view/index.pug'
     }),

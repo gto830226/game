@@ -1,9 +1,9 @@
 import "../style/index.scss";
-import { Canvas } from "./canvas";
-import { materialHandler as mh, ImageMaterial } from "./material";
-import { Loading } from "./loading";
-import { LayerHandler, Layer } from "./layer";
-import { Camera } from "./camera";
+import { Canvas } from "./core/canvas";
+import { materialHandler as mh, ImageMaterial } from "./core/material";
+import { Loading } from "./core/loading";
+import { LayerHandler, Layer } from "./core/layer";
+import { Camera } from "./core/camera";
 import { TestPeople } from "./test";
 import { Background } from "./background";
 import { TestPeople2 } from "./test2";

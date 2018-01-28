@@ -1,9 +1,9 @@
-import { Sprite } from "./sprite";
-import { Animation } from "./animation";
-import { Camera } from "./camera";
-import { Canvas } from "./canvas";
-import { materials, ImageMaterial } from "./material";
-import { controller } from "./controller";
+import { Sprite } from "./core/sprite";
+import { Animation } from "./core/animation";
+import { Camera } from "./core/camera";
+import { Canvas } from "./core/canvas";
+import { materials, ImageMaterial } from "./core/material";
+import { controller } from "./core/controller";
 export class TestPeople extends Sprite {
   public direction = 2;
   public constructor() {

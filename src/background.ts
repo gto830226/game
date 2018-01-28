@@ -1,7 +1,7 @@
-import { Sprite } from "./sprite";
-import { Animation } from "./animation";
-import { Camera } from "./camera";
-import { Canvas } from "./canvas";
+import { Sprite } from "./core/sprite";
+import { Animation } from "./core/animation";
+import { Camera } from "./core/camera";
+import { Canvas } from "./core/canvas";
 
 export class Background extends Sprite {
   public constructor() {
