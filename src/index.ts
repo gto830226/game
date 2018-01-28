@@ -1,20 +1,18 @@
 import "../style/index.scss";
 import { Canvas } from "./core/canvas";
 import { materialHandler as mh, ImageMaterial } from "./core/material";
-import { Loading } from "./core/loading";
+import { Loading } from "./loading";
 import { LayerHandler, Layer } from "./core/layer";
 import { Camera } from "./core/camera";
-import { TestPeople } from "./test";
-import { Background } from "./background";
-import { TestPeople2 } from "./test2";
+// import { Background } from "./background";
+// import { People } from "./people";
+import { levelHandler } from "./core/level";
+import { Level1 } from "./level/level1";
 
-
-
-
-
-let loadMaterial = () => {
+let registerMaterial = () => {
   mh.addMaterial("test", "image", "http://localhost:9527/assets/aigei3_com.png")
   mh.addMaterial("test2", "image", "http://localhost:9527/assets/aigei2_com.png")
+  mh.addMaterial("map", "image", "http://localhost:9527/assets/map.jpg")
   mh.addMaterial("a", "image", "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   mh.addMaterial("b", "image", "https://images.pexels.com/photos/220856/pexels-photo-220856.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   mh.addMaterial("c", "image", "https://images.pexels.com/photos/170304/pexels-photo-170304.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
@@ -28,24 +26,15 @@ let loadMaterial = () => {
 
 
 (async () => {
-  let canvasDom: HTMLCanvasElement = document.getElementById("drawer") as HTMLCanvasElement;
-  loadMaterial();
-  let camera = new Camera();
-  camera.canvas = new Canvas(canvasDom)
-  let loading = new Loading(mh.total);
-  let layer = new Layer('載入畫面', [loading]);
-  camera.handler = new LayerHandler([layer]);
-  camera.handler.addLayer(layer);
-  camera.start();
-  let processSubscription = mh.process.subscribe(p => loading.progress = p);
-  await mh.load();
-  processSubscription.unsubscribe();
-  layer.removeSprite(loading);
-  let test = new TestPeople();
-  let test2 = new TestPeople2();
-  let back = new Background();
-  layer.addSprite(back);
-  layer.addSprite(test);
-  layer.addSprite(test2);
+  registerMaterial();
+  let cameraP1 = new Camera();
+  let cameraP2 = new Camera();
+  cameraP1.canvas = new Canvas(document.getElementById("drawer1") as HTMLCanvasElement)
+  cameraP2.canvas = new Canvas(document.getElementById("drawer2") as HTMLCanvasElement)
+  levelHandler.cameras = [cameraP1, cameraP2];
+  levelHandler.nextLevel(Level1);
 })();
+
+
+
 

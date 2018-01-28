@@ -41,6 +41,7 @@ export class MaterialHandler {
   public constructor() { }
 
   public async load() {
+    this.process.next(0);
     let tasks = Object
       .keys(this.materials)
       .map(async (name) => {

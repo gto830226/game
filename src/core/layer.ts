@@ -26,10 +26,7 @@ export class LayerHandler {
     }
     this.layers = [];
   }
-  public layer(name: string) {
-    if (!name) return;
-    return this.layers.find(layer => layer.name == name);
-  }
+
   public draw(camera: Camera) {
     let timerId: number;
     for (let layer of this.layers) {
@@ -39,7 +36,7 @@ export class LayerHandler {
 }
 
 export class Layer {
-  public constructor(public name: string, public sprites: Sprite[] = []) { }
+  public constructor(public sprites: Sprite[] = []) { }
   public handler: LayerHandler;
   public disabled = false;
 

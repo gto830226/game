@@ -2,44 +2,46 @@ import { Animation } from "./animation";
 import { Canvas } from "./canvas";
 import { Camera } from "./camera";
 import { Point } from "./point";
-
+import { BehaviorSubject } from "rxjs";
 export class Sprite {
-  public point = new Point();
+  public point: Point;
   public animations: {
     [name: string]: Animation
   } = {};
-  // region animationIndex
-  private _animationIndex = "";
-  public get animationIndex(): string {
-    return this._animationIndex;
-  }
-  public set animationIndex(index: string) {
-    if (!this.animations[index]) return;
-    if (index == this._animationIndex) return;
-    this.endAnimation();
-    this._animationIndex = index;
-    this.startAnimation();
-  }
-  // endregion
-
-  public constructor() {
+  public defaultAnimationIndex: string;
+  public animationIndex = new BehaviorSubject<string>("");
+  private lastAnimationIndex = new BehaviorSubject<string>("");
+  public constructor(x = 0, y = 0) {
+    this.point = new Point(x, y);
     this.initAnimations()
     this.initAnimationName();
+    this.animationIndex.distinctUntilChanged().subscribe(index => {
+      this.endLastAnimation();
+      this.startAnimation();
+      this.lastAnimationIndex.next(index);
+    })
   }
   protected initAnimationName() {
     let name = Object.keys(this.animations)[0];
-    if (name) this.animationIndex = name;
+    if (!name) return;
+    this.animationIndex.next(name);
+    this.defaultAnimationIndex = name;
   }
 
   public draw(camera: Camera) {
-    let animation = this.animations[this.animationIndex];
+    let animation = this.animations[this.animationIndex.getValue()];
     if (!animation) return;
     animation.draw(camera);
   }
 
   public get animation(): Animation {
-    return this.animations[this.animationIndex];
+    return this.animations[this.animationIndex.getValue()];
   }
+
+  public get lastAnimation(): Animation {
+    return this.animations[this.lastAnimationIndex.getValue()];
+  }
+
 
   public startAnimation() {
     if (!this.animation) return;
@@ -54,6 +56,11 @@ export class Sprite {
   public endAnimation() {
     if (!this.animation) return;
     this.animation.end();
+  }
+
+  public endLastAnimation() {
+    if (!this.lastAnimation) return;
+    this.lastAnimation.end();
   }
 
   public initAnimations() {

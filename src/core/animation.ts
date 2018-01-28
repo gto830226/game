@@ -5,7 +5,7 @@ export interface IFrameScript {
   script: (camera: Camera, canvas: Canvas) => void
 }
 export class Animation {
-  private timerId: number;
+  private timerId: number = null;
   private frameIndex = 0;
   private defaultRepeatCount: number;
   public constructor(public frames: IFrameScript[], public repeatCount = 1) {
@@ -18,12 +18,14 @@ export class Animation {
       });
   }
 
-  public start(repeatCount?: number) {
+  public async start(repeatCount?: number) {
     if (this.frames.length == 0) return;
     if (this.timerId) this.end();
     if (typeof repeatCount == "number") this.repeatCount = repeatCount;
-    // console.log('start', this.name);
-    this.nextFrame()
+    return new Promise<null>((resolve, reject) => {
+      this.nextFrame();
+      resolve(null);
+    })
   }
 
   public stop() {
@@ -34,27 +36,22 @@ export class Animation {
     this.clearTimer();
     this.frameIndex = 0;
     this.repeatCount = this.defaultRepeatCount;
-    // console.log('end', this.name)
   }
 
   private clearTimer() {
     if (this.timerId != null) {
-
       clearTimeout(this.timerId)
       this.timerId = null;
     }
   }
   private nextFrame() {
-    // console.log('this.repeatCount:', this.name, this.repeatCount)
     if (this.repeatCount != 0) {
       let frame = this.frames[this.frameIndex];
       this.clearTimer();
       this.timerId = setTimeout(() => {
         this.frameIndex = (this.frameIndex + 1) % this.frames.length;
         this.nextFrame();
-        if (this.repeatCount >= 0) {
-          if (this.frameIndex + 1 >= this.frames.length) this.repeatCount--;
-        }
+        if (this.repeatCount >= 0 && this.frameIndex + 1 >= this.frames.length) this.repeatCount--;
       }, frame.stay);
     } else {
       this.end();

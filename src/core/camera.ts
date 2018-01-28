@@ -1,15 +1,26 @@
 import { BehaviorSubject, Subscription } from "rxjs";
 import { LayerHandler } from "./layer";
 import { Canvas } from "./canvas";
+import { Point } from "./point";
 export class Camera {
   public handler: LayerHandler;
   public canvas: Canvas;
   private timerId: number;
   private fpsSubscription: Subscription
   public fps = new BehaviorSubject<number>(60);
-  public constructor() {
-
+  public point: Point;
+  public constructor(x = 0, y = 0) {
+    this.point = new Point(x, y);
   }
+  public get width() {
+    if (!this.canvas) return;
+    return this.canvas.width;
+  }
+  public get height() {
+    if (!this.canvas) return;
+    return this.canvas.height;
+  }
+
   public get isRunning() {
     return this.timerId != null || this.fpsSubscription != null;
   }
