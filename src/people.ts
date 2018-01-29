@@ -67,6 +67,7 @@ export class People extends Sprite {
       this.move();
     })
     controller.keyEvent(keymap.rotate).subscribe(e => {
+      this.stand();
       this.animationIndex.next("rotate");
     })
   }
