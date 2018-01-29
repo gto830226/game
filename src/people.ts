@@ -75,6 +75,7 @@ export class People extends Sprite {
   private stand() {
     this.animationIndex.next('stand');
   }
+
   private move() {
     switch (this.direction.getValue()) {
       case 2:
@@ -99,6 +100,19 @@ export class People extends Sprite {
       case 8: return 144;
     }
     return 0
+  }
+  public prevDraw(camera: Camera, canvas: Canvas) {
+    let offsetX = camera.point.x - camera.width / 2;
+    let offsetY = camera.point.y - camera.height / 2;
+    let matW = 32;
+    let matH = 48;
+    let tarW = matW * 1.25;
+    let tarH = matH * 1.25;
+    let x = this.point.x - tarW / 2 - offsetX;
+    let y = this.point.y - tarH / 2 - offsetY;
+    canvas.ctx.fillStyle = "#333";
+    canvas.ctx.font = "font";
+    canvas.ctx.fillText(`(${this.point.x},${this.point.y})`, x, y);
   }
   public initAnimations() {
     let matW = 32;

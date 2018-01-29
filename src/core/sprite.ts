@@ -27,10 +27,13 @@ export class Sprite {
     this.animationIndex.next(name);
     this.defaultAnimationIndex = name;
   }
+  public prevDraw(camera: Camera, canvas: Canvas) {
 
+  }
   public draw(camera: Camera) {
     let animation = this.animations[this.animationIndex.getValue()];
     if (!animation) return;
+    this.prevDraw(camera, camera.canvas);
     animation.draw(camera);
   }
 
