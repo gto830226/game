@@ -6,7 +6,7 @@ import { materials } from "./core/material";
 
 export class Background extends Sprite {
   private mapData: number[][] = [];
-  public constructor(public color = "#000", public countX: number = 50, public countY: number = 50) {
+  public constructor(public color = "#000", public countX: number = 30, public countY: number = 30) {
     super();
     this.initMap();
   }
