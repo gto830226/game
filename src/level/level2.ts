@@ -9,12 +9,15 @@ export class Level2 extends Level {
     super('關卡');
   }
   public initSprites(cameras: Camera[]) {
-    let backLayer = new Layer([new Background()]);
+    let map = new Background("#000", 20, 20);
+    let backLayer = new Layer([map]);
     this.layerHandler.addLayer(backLayer);
     let p1 = new People({ up: 'w', down: 's', left: 'a', right: 'd', rotate: 'z' }, materials['p1'] as ImageMaterial, 200, 400);
     let p2 = new People({ up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight', rotate: ' ' }, materials['p2'] as ImageMaterial, 500, 200);
     cameras[0].point.follow(p1.point);
     cameras[1].point.follow(p2.point);
+    map.limitInside(p1.point);
+    map.limitInside(p2.point);
     let peopleLayer = new Layer([p1, p2]);
     this.layerHandler.addLayer(peopleLayer);
   }
