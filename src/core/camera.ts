@@ -24,6 +24,14 @@ export class Camera {
   public get isRunning() {
     return this.timerId != null || this.fpsSubscription != null;
   }
+  public isInside(x: number, y: number) {
+    let difference = 100;
+    let unitW = this.width / 2 + difference;
+    let unitH = this.height / 2 + difference;
+    if (Math.abs(x - this.point.x) > unitW) return false;
+    if (Math.abs(y - this.point.y) > unitH) return false;
+    return true;
+  }
   public start() {
     if (this.isRunning) throw "Error: canvas is running.";
     if (!this.canvas) throw "Error: camera is undefined.";

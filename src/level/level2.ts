@@ -11,7 +11,7 @@ export class Level2 extends Level {
   }
   public initSprites(cameras: Camera[]) {
     let obstacle = new Obstacle(250, 150, 2, 1);
-    let map = new Background("#000", 20, 20);
+    let map = new Background("#000", 300, 300);
     let backLayer = new Layer([map]);
     this.layerHandler.addLayer(backLayer);
     let p1 = new People({ up: 'w', down: 's', left: 'a', right: 'd', rotate: 'z' }, materials['p1'] as ImageMaterial, 200, 400);

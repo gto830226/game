@@ -46,7 +46,9 @@ export class Background extends Sprite {
         let offsetY = camera.point.y - camera.height / 2;
         for (let j = 0; j < this.countY; j++) {
           for (let i = 0; i < this.countX; i++) {
-            canvas.ctx.drawImage(source, 0, 0, this.srcW, this.srcH, i * this.srcW - offsetX, j * this.srcH - offsetY, this.srcW, this.srcH);
+            let x = i * this.srcW;
+            let y = j * this.srcH;
+            if (camera.isInside(x, y)) canvas.ctx.drawImage(source, 0, 0, this.srcW, this.srcH, x - offsetX, y - offsetY, this.srcW, this.srcH);
           }
         }
       }
