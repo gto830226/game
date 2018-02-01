@@ -4,11 +4,13 @@ import { materials, ImageMaterial } from "../core/material";
 import { Layer } from "../core/layer";
 import { Background } from "../background";
 import { People } from "../people";
+import { Obstacle } from "../obstacle";
 export class Level2 extends Level {
   public constructor() {
     super('關卡');
   }
   public initSprites(cameras: Camera[]) {
+    let obstacle = new Obstacle(250, 150, 2, 1);
     let map = new Background("#000", 20, 20);
     let backLayer = new Layer([map]);
     this.layerHandler.addLayer(backLayer);
@@ -18,7 +20,7 @@ export class Level2 extends Level {
     cameras[1].point.follow(p2.point);
     map.limitInside(p1.point);
     map.limitInside(p2.point);
-    let peopleLayer = new Layer([p1, p2]);
+    let peopleLayer = new Layer([p1, p2, obstacle]);
     this.layerHandler.addLayer(peopleLayer);
   }
 

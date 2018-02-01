@@ -13,6 +13,8 @@ let registerMaterial = () => {
   mh.addMaterial("p1", "image", "http://localhost:9527/assets/aigei2_com.png")
   mh.addMaterial("p2", "image", "http://localhost:9527/assets/aigei_com.png")
   mh.addMaterial("map", "image", "http://localhost:9527/assets/map.jpg")
+  mh.addMaterial("obstacle", "image", "http://localhost:9527/assets/map_item.png")
+
   // mh.addMaterial("a", "image", "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   // mh.addMaterial("b", "image", "https://images.pexels.com/photos/220856/pexels-photo-220856.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
   // mh.addMaterial("c", "image", "https://images.pexels.com/photos/170304/pexels-photo-170304.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb")
